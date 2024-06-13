@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp עם מספר</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        input, select, textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function openWhatsApp() {
+            var number = document.getElementById('phoneNumber').value;
+            var countryCode = document.getElementById('countryCode').value;
+            var message = document.getElementById('message').value;
+            if (number) {
+                // מסירים את הספרה הראשונה (0) אם היא קיימת
+                if (number.startsWith('0')) {
+                    number = number.substring(1);
+                }
+                var fullNumber = countryCode + number;
+                var url = 'https://wa.me/' + fullNumber;
+                if (message) {
+                    url += '?text=' + encodeURIComponent(message);
+                }
+                window.open(url, '_blank');
+            } else {
+                alert('נא להכניס מספר טלפון.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>WhatsApp עם מספר</h1>
+        <label for="countryCode">בחר מדינה:</label>
+        <select id="countryCode" name="countryCode">
+            <option value="972" selected>ישראל (+972)</option>
+            <option value="1">ארצות הברית (+1)</option>
+            <option value="44">בריטניה (+44)</option>
+            <option value="91">הודו (+91)</option>
+            <option value="86">סין (+86)</option>
+            <!-- הוסף כאן אפשרויות נוספות לפי הצורך -->
+        </select>
+        <label for="phoneNumber">הכנס מספר:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber">
+        <label for="message">הודעה ראשונה:</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+        <button onclick="openWhatsApp()">אישור</button>
+    </div>
+</body>
+</html>
