@@ -3,50 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp עם מספר</title>
+    <title>דף הבית של משפחת שרם</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --color1: #6734B9;
+            --color2: #9B59B6;
+            --color3: #EA498B;
+            --color4: #E24B40;
+            --color5: #FF9800;
+            --color6: #FFC100;
+            --color7: #CCDD20;
+            --color8: #88C441;
+            --color9: #0dc143;
+            --color10: #5F7C8B;
+            --color11: #009687;
+            --color12: #00A6F6;
+            --color13: #3E4EB7;
+            --color14: #1FA0BC;
+        }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f4f4f4;
+            color: #333;
             margin: 0;
+            padding: 0;
+            font-size: 14px; /* Smaller font size */
         }
-        .container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        header {
+            background-color: var(--color1);
+            color: white;
+            padding: 0.5em 0; /* Reduced padding */
             text-align: center;
+            margin-bottom: 1em; /* Reduced margin */
         }
         h1 {
-            color: #4CAF50;
+            margin: 0;
+            font-size: 24px; /* Smaller font size */
         }
-        label {
+        h2 {
+            color: var(--color1);
+            font-size: 18px; /* Smaller font size */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 0.3em 0; /* Reduced margin */
+        }
+        a {
+            text-decoration: none;
+            color: var(--color12);
+            display: flex;
+            align-items: center;
+            font-size: 14px; /* Smaller font size */
+        }
+        a i {
+            margin-right: 0.3em; /* Reduced margin */
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px; /* Reduced gap */
+        }
+        .box {
+            padding: 0.5em; /* Reduced padding */
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Reduced shadow */
+            border-radius: 8px;
+            width: 200px; /* Reduced width */
+            transition: transform 0.3s ease;
+        }
+        .box:hover {
+            transform: translateY(-5px); /* Reduced translate */
+        }
+        .box h2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5em; /* Reduced margin */
+        }
+        .box ul {
+            padding: 0;
+            text-align: center;
+        }
+        .box li {
+            margin: 0.3em 0; /* Reduced margin */
+        }
+        .box a {
+            display: block;
+            padding: 0.3em; /* Reduced padding */
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .box a:hover {
+            background-color: var(--color1);
+            color: white;
+        }
+        .search-box {
+            text-align: center;
+            margin-top: 0.5em; /* Reduced margin */
+        }
+        .search-box input[type="text"] {
+            padding: 0.3em; /* Reduced padding */
+            font-size: 1em;
+            width: 80%;
+            max-width: 400px; /* Increased width */
+            margin-right: 0.3em; /* Reduced margin */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-box button {
+            padding: 0.3em 0.5em; /* Reduced padding */
+            font-size: 1em;
+            background-color: var(--color1);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .search-box button:hover {
+            background-color: var(--color2);
+        }
+        .full-width-box {
+            width: calc(100% - 40px); /* Full width minus container gap */
+            padding: 1em; /* Extra padding */
+            margin: 0 auto 10px auto; /* Margin for spacing */
+        }
+        .whatsapp-box label {
             display: block;
             margin: 15px 0 5px;
+            text-align: center;
         }
-        input, select, textarea {
+        .whatsapp-box input, .whatsapp-box select, .whatsapp-box textarea {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
-        button {
-            background-color: #4CAF50;
+        .whatsapp-box button {
+            background-color: var(--color9);
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            display: block;
+            margin: 0 auto;
         }
-        button:hover {
-            background-color: #45a049;
+        .whatsapp-box button:hover {
+            background-color: var(--color2);
         }
+        #whatsappIcon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--color9);
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s ease;
+        }
+        #whatsappIcon:hover {
+            background-color: #96e7ae;
+        }
+        #whatsappPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            z-index: 1000;
+        }
+        #whatsappPopup h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #whatsappPopup .whatsapp-box {
+            background: none;
+            box-shadow: none;
+        }
+        #whatsappPopup .whatsapp-box input,
+        #whatsappPopup .whatsapp-box textarea {
+            margin-bottom: 5px;
+        }
+        #whatsappPopup .whatsapp-box button {
+            margin-top: 10px;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        #exchangeRate {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+		.clock {
+			font-size: 20px;
+			text-align: center;
+			margin: 10px 0;
+			display: flex;
+			align-items: center;
+			.time-text{
+				margin: 10px;
+				font-size: 13px;
+			};
+		}
+
+		.clock i {
+			margin-left: 10px;
+			font-size: 1.5em;
+		}
+
     </style>
     <script>
         function openWhatsApp() {
@@ -68,25 +261,167 @@
                 alert('נא להכניס מספר טלפון.');
             }
         }
+        function clearInput() {
+            document.getElementById('searchInput').value = '';
+        }
+        function toggleWhatsAppPopup() {
+            var popup = document.getElementById('whatsappPopup');
+            var overlay = document.getElementById('overlay');
+            if (popup.style.display === 'none') {
+                popup.style.display = 'block';
+                overlay.style.display = 'block';
+            } else {
+                popup.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+        }
+        // פונקציה להבאת שער הדולר
+        async function fetchExchangeRate() {
+            const apiKey = '5f09fdfef874a3760723db78'; // הכנס את מפתח ה-API שלך כאן
+            const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const ilsRate = data.conversion_rates.ILS;
+                const today = new Date().toLocaleDateString('he-IL');
+
+                document.getElementById('exchangeRate').innerText = ilsRate ;
+            } catch (error) {
+                document.getElementById('exchangeRate').innerText = 'לא ניתן להציג את שער הדולר כרגע.';
+                console.error('Error fetching exchange rate:', error);
+            }
+        }
+function updateTime() {
+    const options = { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    const nowCA = new Date().toLocaleTimeString('en-GB', options);
+    document.getElementById('timeCA').innerText = nowCA;
+    updateIcon('iconCA', nowCA);
+
+    options.timeZone = 'America/New_York';
+    const nowPA = new Date().toLocaleTimeString('en-GB', options);
+    document.getElementById('timePA').innerText = nowPA;
+    updateIcon('iconPA', nowPA);
+}
+
+function updateIcon(iconId, time) {
+    const [hour] = time.split(':').map(Number);
+    const icon = document.getElementById(iconId);
+    if (hour >= 6 && hour < 18) {
+        icon.className = 'fas fa-sun';
+    } else {
+        icon.className = 'fas fa-moon';
+    }
+}
+
+setInterval(updateTime, 1000);
+
+window.onload = function() {
+    updateExchangeRate();
+    updateTime();
+};
+
+
+        // קוראים לפונקציה כשהעמוד נטען
+        window.onload = fetchExchangeRate;
     </script>
 </head>
 <body>
+    <header>
+        <h1>דף הבית של משפחת שרם</h1>
+    </header>
     <div class="container">
-        <h1>WhatsApp עם מספר</h1>
-        <label for="countryCode">בחר מדינה:</label>
-        <select id="countryCode" name="countryCode">
-            <option value="972" selected>ישראל (+972)</option>
-            <option value="1">ארצות הברית (+1)</option>
-            <option value="44">בריטניה (+44)</option>
-            <option value="91">הודו (+91)</option>
-            <option value="86">סין (+86)</option>
-            <!-- הוסף כאן אפשרויות נוספות לפי הצורך -->
-        </select>
-        <label for="phoneNumber">הכנס מספר:</label>
-        <input type="text" id="phoneNumber" name="phoneNumber">
-        <label for="message">הודעה ראשונה:</label>
-        <textarea id="message" name="message" rows="4"></textarea>
-        <button onclick="openWhatsApp()">אישור</button>
+        <div class="box full-width-box">
+            <h2><i class="fas fa-search"></i> Google Search</h2>
+            <div class="search-box">
+                <form id="searchForm" action="https://www.google.com/search" method="get" target="_blank" onsubmit="clearInput()">
+                    <input id="searchInput" type="text" name="q" placeholder="Search Google" autocomplete="on">
+                    <button type="submit"><i class="fas fa-search"></i> Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="box">
+            <h2><i class="fas fa-envelope"></i> Gmail Links</h2>
+            <ul>
+                <li><a href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><i class="fas fa-envelope"></i> המייל של אוריאל</a></li>
+                <li><a href="https://mail.google.com/mail/u/3/#inbox" target="_blank"><i class="fas fa-envelope"></i> המייל של זהבי</a></li>
+                <li><a href="https://mail.google.com/mail/u/1/#inbox" target="_blank"><i class="fas fa-envelope"></i> המייל של אלישבע</a></li>
+                <li><a href="https://mail.google.com/mail/u/2/#inbox" target="_blank"><i class="fas fa-envelope"></i> המייל של מלכי</a></li>
+            </ul>
+        </div>
+        <div class="box">
+            <h2><i class="fas fa-comments"></i> Gmail Chat Links</h2>
+            <ul>
+                <li><a href="https://mail.google.com/mail/u/3/#chat/home" target="_blank"><i class="fas fa-comments"></i> צ'אט של זהבי</a></li>
+                <li><a href="https://mail.google.com/mail/u/1/#chat/home" target="_blank"><i class="fas fa-comments"></i> צ'אט של אלישבע</a></li>
+                <li><a href="https://mail.google.com/mail/u/2/#chat/home" target="_blank"><i class="fas fa-comments"></i> צ'אט של מלכי</a></li>
+          		 <li><a href="https://web.whatsapp.com/" target="_blank"><i class="fas fa-comments"></i>ווטסאפ של אמא </a></li>
+            </ul>
+        </div>
+        <div class="box">
+            <h2><i class="fa fa-dollar"></i>&nbsp;&nbsp;&nbsp;<i class="fas fa-exchange-alt"></i>&nbsp;&nbsp;&nbsp;<i class="fa fa-ils"></i></h2>
+            <div id="exchangeRate">טוען שער הדולר...</div>
+        </div>
+        <div class="box">
+            <h2><i class="fas fa-music"></i> Kol Chai Music</h2>
+            <ul>
+                <li><a href="https://kcm.fm/Live/" target="_blank"><i class="fas fa-music"></i> קול חי מיוזיק</a></li>
+            </ul>
+        </div>
+        <div class="box">
+            <h2><i class="fas fa-newspaper"></i> Kol Rega News</h2>
+            <ul>
+                <li><a href="https://www.kore.co.il/" target="_blank"><i class="fas fa-newspaper"></i> כל-רגע </a></li>
+                <li><a href="https://www.kore.co.il/flashNews" target="_blank"><i class="fas fa-newspaper"></i> כל-רגע מבזקים</a></li>
+                <li><a href="https://www.jdn.co.il/" target="_blank"><i class="fas fa-newspaper"></i> JDN</a></li>
+                <li><a href="https://hm-news.co.il/" target="_blank"><i class="fas fa-newspaper"></i> המחדש</a></li>
+            </ul>
+        </div>
+        <div class="box">
+            <h2><i class="fas fa-bus"></i> מידע שימושי</h2>
+            <ul>
+                <li><a href="https://xn----2hcef0a0dvc.xn--9dbq2a/%D7%9B%D7%9C%D7%99%D7%9D/%D7%9E%D7%99%D7%93%D7%A2-%D7%AA%D7%97%D7%A0%D7%95%D7%AA-%D7%90%D7%95%D7%98%D7%95%D7%91%D7%95%D7%A1" target="_blank"><i class="fas fa-bus"></i> מתי מגיע האוטובוס לתחנה</a></li>
+            </ul>
+        </div>
+        <div class="box">
+            <h2><i class="fas fa-chart-line"></i>קבצי ניהול</h2>
+            <ul>
+                <li><a href="https://docs.google.com/spreadsheets/d/1s0ZPx5GZiMPsaenis15PwXt4e78-kZ1h7AhjjfjiCwI/edit?gid=0#gid=0" target="_blank"><i class="fas fa-chart-line"></i> קובץ השקעות</a></li>
+            </ul>
+        </div>
+   <div class="box">
+    <h2><i class="fas fa-chart-line"></i>שעון עולמי</h2>
+    <div class="clock" id="clockCA">
+     
+        <i id="iconCA" class="fas time-text"></i>
+  		<span id="timeCA"></span>
+		<span class="time-text">לוס אנג'לס</span>
+    </div>
+    <div class="clock" id="clockPA">
+        
+        <i id="iconPA" class="fas time-text"></i>
+		<span id="timePA"></span>
+		<span class="time-text">פילדלפיה</span>
+    </div>
+</div>
+
+        <!-- WhatsApp Section -->
+        <div id="whatsappPopup">
+            <h2><i class="fab fa-whatsapp"></i> שליחת הודעה בוואטסאפ</h2>
+            <div class="whatsapp-box">
+                <label for="countryCode">קידומת מדינה:</label>
+                <input type="text" id="countryCode" placeholder="+972">
+                <label for="phoneNumber">מספר טלפון:</label>
+                <input type="text" id="phoneNumber" placeholder="0501234567">
+                <label for="message">הודעה:</label>
+                <textarea id="message" rows="4" placeholder="הכנס הודעה כאן..."></textarea>
+                <button onclick="openWhatsApp()">שלח הודעה</button>
+            </div>
+        </div>
+        <div id="overlay" onclick="toggleWhatsAppPopup()"></div>
+    </div>
+    <div id="whatsappIcon" onclick="toggleWhatsAppPopup()">
+        <i class="fab fa-whatsapp"></i>
     </div>
 </body>
 </html>
