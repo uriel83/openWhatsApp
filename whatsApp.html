@@ -131,6 +131,15 @@
         .search-box button:hover {
             background-color: var(--color2);
         }
+
+        .box-youtube {
+            padding: 0.5em; /* Reduced padding */
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Reduced shadow */
+            border-radius: 8px;
+            width: 401px; /* Reduced width */
+            transition: transform 0.3s ease;
+        }
         .full-width-box {
             width: calc(100% - 40px); /* Full width minus container gap */
             padding: 1em; /* Extra padding */
@@ -399,21 +408,33 @@ window.onload = function() {
             </ul>
         </div>
    <div class="box">
-    <h2><i class="fas fa-chart-line"></i>שעון עולמי</h2>
-    <div class="clock" id="clockCA">
-     
-        <i id="iconCA" class="fas time-text"></i>
-  		<span id="timeCA"></span>
-		<span class="time-text">לוס אנג'לס</span>
-    </div>
-    <div class="clock" id="clockPA">
-        
-        <i id="iconPA" class="fas time-text"></i>
-		<span id="timePA"></span>
-		<span class="time-text">פילדלפיה</span>
-    </div>
-</div>
-
+		<h2><i class="fas fa-chart-line"></i>שעון עולמי</h2>
+		<div class="clock" id="clockCA">
+		
+			<i id="iconCA" class="fas time-text"></i>
+			<span id="timeCA"></span>
+			<span class="time-text">לוס אנג'לס</span>
+		</div>
+		<div class="clock" id="clockPA">
+			
+			<i id="iconPA" class="fas time-text"></i>
+			<span id="timePA"></span>
+			<span class="time-text">פילדלפיה</span>
+		</div>
+<br>
+	</div>
+        <div class="box-youtube">
+			<iframe width="400" height="225" src="https://www.youtube.com/embed/AVzp8VL9Tp0?autoplay=0&loop=1&rel=0&disablekb=0&fs=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="box-youtube">
+			<iframe width="400" height="225" src="https://www.youtube.com/embed/15HBrgWPGoY?autoplay=0&loop=1&rel=0&disablekb=0&fs=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>        
+		</div>
+        <div class="box-youtube">
+			<iframe width="400" height="225" src="https://www.youtube.com/embed/T0einAkYXzU?autoplay=0&loop=1&rel=0&disablekb=0&fs=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>				
+   	</div>
+        <div class="box-youtube">
+			<iframe width="400" height="225" src="https://www.youtube.com/embed/FGKbS5qhQds?autoplay=0&loop=1&rel=0&disablekb=0&fs=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>		</div>
+	</div>
         <!-- WhatsApp Section -->
         <div id="whatsappPopup">
             <h2><i class="fab fa-whatsapp"></i> שליחת הודעה בוואטסאפ</h2>
