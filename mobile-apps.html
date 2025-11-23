@@ -5,70 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>הקיצורים שלי</title>
 
-  <!-- אייקונים של FontAwesome (ל-whatsapp) -->
+  <!-- אייקונים -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* ======================== בסיס ========================== */
+    /* ===== בסיס כללי ===== */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, sans-serif;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     }
 
     body {
-      background: #0f172a;
-      color: #f9fafb;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
+      background: linear-gradient(180deg, #e5f0ff, #f9fafb);
+      color: #0f172a;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    /* ===================== כפתור יציאה ממסך מלא ====================== */
-    .fullscreen-exit {
+    /* טיפה טקסטורה עדינה */
+    body::before {
+      content: "";
       position: fixed;
-      top: 12px;
-      left: 12px;
-      z-index: 9999;
-      background: rgba(0,0,0,0.5);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.2);
+      inset: 0;
+      background:
+        linear-gradient(transparent 0 1px, rgba(148,163,184,0.18) 1px 2px, transparent 2px 100%),
+        linear-gradient(90deg, transparent 0 1px, rgba(148,163,184,0.12) 1px 2px, transparent 2px 100%);
+      background-size: 42px 42px;
+      mix-blend-mode: soft-light;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: -1;
     }
 
-    /* ======================== מסך אפליקציות ======================= */
-    .app-wrapper {
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(56,189,248,0.22), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(129,140,248,0.22), transparent 55%),
+        radial-gradient(circle at 40% 90%, rgba(52,211,153,0.18), transparent 55%);
+      filter: blur(40px);
+      opacity: 0.8;
+      mix-blend-mode: screen;
+      z-index: -2;
+    }
+
+    /* ===== מסגרת צבעונית סביב המסך ===== */
+    .screen-border {
+      position: fixed;
+      inset: 10px;
+      border-radius: 24px;
+      border: 2px solid rgba(59,130,246,0.55); /* כחול הייטקי */
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.8) inset,
+        0 0 26px rgba(59,130,246,0.35);
+      pointer-events: none;
+      z-index: 9990;
+    }
+
+    /* ===== אזור התוכן העליון ===== */
+    .content {
       width: 100%;
       max-width: 480px;
-      padding: 16px 12px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      margin: 20px auto 40px;
+      padding: 8px 18px 40px;
     }
 
+    /* ===== כפתור יציאה ממסך מלא ===== */
+    .fullscreen-exit {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      backdrop-filter: blur(10px);
+      display: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      z-index: 9999;
+      color: #0f172a;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.15);
+      transition: 0.2s;
+    }
+
+    .fullscreen-exit:hover {
+      transform: translateY(-1px);
+    }
+
+    /* ===== כותרת ואפליקציות (למעלה) ===== */
     header {
       text-align: center;
+      margin-bottom: 18px;
     }
 
     header h1 {
-      font-size: 1.1rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #0f172a;
     }
 
     header p {
-      font-size: 0.8rem;
-      opacity: 0.7;
+      margin-top: 4px;
+      opacity: 0.65;
+      font-size: 0.9rem;
     }
 
     .icons-grid {
       margin-top: 10px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      justify-items: center;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
     }
 
     .icon-card {
@@ -78,156 +131,251 @@
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    .icon-card:hover {
+      transform: translateY(-5px);
+      filter: brightness(1.06);
     }
 
     .icon-circle {
-      width: 64px;
-      height: 64px;
-      border-radius: 24px;
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
-      font-weight: 600;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.35);
-      transition: transform 0.12s ease;
+      font-size: 2rem;
+      color: white;
+      box-shadow:
+        0 6px 16px rgba(15,23,42,0.15),
+        0 0 10px rgba(15,23,42,0.05);
+      transition: 0.2s;
     }
 
-    .icon-card:active .icon-circle {
-      transform: scale(0.95);
+    .icon-card:hover .icon-circle {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow:
+        0 12px 24px rgba(15,23,42,0.2),
+        0 0 14px rgba(15,23,42,0.08);
     }
-
-    /* צבעי אייקונים */
-    .icon-chatgpt { background: radial-gradient(circle, #22c55e, #16a34a); }
-    .icon-aliexpress { background: radial-gradient(circle, #f97316, #ea580c); }
-    .icon-invest { background: radial-gradient(circle, #0ea5e9, #0369a1); }
-    .icon-tustus { background: radial-gradient(circle, #fbbf24, #d97706); }
-    .icon-aman-time { background: radial-gradient(circle, #9333ea, #7e22ce); }
-    .icon-mishnat { background: radial-gradient(circle, #14b8a6, #0d9488); }
-    .icon-sketchup { background: radial-gradient(circle, #3b82f6, #1d4ed8); }
-    .icon-hilan { background: radial-gradient(circle, #ef4444, #b91c1c); }
 
     .icon-label {
-      font-size: 0.8rem;
-      max-width: 5em;
+      font-size: 0.82rem;
+      opacity: 0.75;
+      margin-top: 3px;
       text-align: center;
     }
 
-    /* ======================== אייקון וואטסאפ צף ======================= */
+    /* צבעי אייקונים */
+    .icon-chatgpt { background: linear-gradient(135deg, #22c55e, #15803d); }
+    .icon-aliexpress { background: linear-gradient(135deg, #f97316, #ea580c); }
+    .icon-invest { background: linear-gradient(135deg, #0ea5e9, #0369a1); }
+    .icon-tustus { background: linear-gradient(135deg, #facc15, #d97706); }
+    .icon-aman-time { background: linear-gradient(135deg, #a855f7, #6d28d9); }
+    .icon-mishnat { background: linear-gradient(135deg, #14b8a6, #0f766e); }
+    .icon-sketchup { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .icon-hilan { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+
+    /* ===== אייקון וואטסאפ צף ===== */
     #whatsappIcon {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: #25D366;
-      color: white;
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      color: white;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       font-size: 32px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      box-shadow:
+        0 6px 20px rgba(15,23,42,0.25),
+        0 0 14px rgba(34,197,94,0.5);
       z-index: 9999;
+      transition: 0.18s;
     }
 
-    /* פופאפ וואטסאפ */
+    #whatsappIcon:hover {
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    /* ===== פופאפ וואטסאפ ===== */
     #whatsappPopup {
       position: fixed;
-      bottom: 100px;
       right: 20px;
+      top: 20px;
       width: 280px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 18px;
       padding: 16px;
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      display: none;
+      box-shadow: 0 10px 28px rgba(15,23,42,0.25);
       z-index: 99999;
-      color: #000;
+
+      opacity: 0;
+      transform: translateY(-15px) scale(0.97);
+      pointer-events: none;
+      transition: 0.2s ease-out;
+
+      color: #0f172a;
+      border: 1px solid rgba(148,163,184,0.6);
+      backdrop-filter: blur(12px);
+    }
+
+    #whatsappPopup.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    #whatsappPopup h2 {
+      margin-bottom: 8px;
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #047857;
+    }
+
+    #whatsappPopup h2 i {
+      color: #22c55e;
+      font-size: 1.2rem;
+    }
+
+    #whatsappPopup label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    #whatsappPopup input,
+    #whatsappPopup textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.86rem;
+      background: rgba(255,255,255,0.9);
+      color: #0f172a;
+      outline: none;
+      transition: 0.18s;
+    }
+
+    #whatsappPopup input::placeholder,
+    #whatsappPopup textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    #whatsappPopup input:focus,
+    #whatsappPopup textarea:focus {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.45);
+    }
+
+    #whatsappPopup button {
+      margin-top: 12px;
+      width: 100%;
+      padding: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow:
+        0 10px 24px rgba(22,163,74,0.38),
+        0 0 14px rgba(34,197,94,0.5);
+      transition: 0.18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    #whatsappPopup button:hover {
+      transform: translateY(-2px);
     }
 
     #overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.4);
-      display: none;
-      z-index: 9990;
+      inset: 0;
+      background: rgba(15,23,42,0.25);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9980;
+      transition: 0.18s ease-out;
     }
 
-    .whatsapp-box label {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #333;
+    #overlay.open {
+      opacity: 1;
+      pointer-events: auto;
     }
 
-    .whatsapp-box input,
-    .whatsapp-box textarea {
-      width: 100%;
-      margin-top: 4px;
-      padding: 8px;
-      border: 1px solid #bbb;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .whatsapp-box button {
-      margin-top: 12px;
-      width: 100%;
-      padding: 10px;
-      background: #25D366;
-      border: none;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
+    @media (max-width: 480px) {
+      .content {
+        padding-inline: 12px;
+      }
+      #whatsappPopup {
+        right: 12px;
+        left: 12px;
+        width: auto;
+      }
+      .screen-border {
+        inset: 6px;
+        border-radius: 18px;
+      }
     }
   </style>
 </head>
 
-<body onclick="enterFullscreen()">
+<body>
 
-  <!-- יציאה ממסך מלא -->
-  <div class="fullscreen-exit" onclick="exitFullscreen(event)">
-    יציאה ממסך מלא ✖
-  </div>
+  <div class="screen-border"></div>
 
-  <!-- פופאפ וואטסאפ -->
-  <div id="whatsappPopup">
-    <h2><i class="fab fa-whatsapp"></i> שליחת הודעה בוואטסאפ</h2>
-    <div class="whatsapp-box">
-      <label for="countryCode">קידומת מדינה:</label>
-      <input type="text" id="countryCode" placeholder="+972">
+  <!-- כפתור יציאה ממסך מלא -->
+  <div class="fullscreen-exit" onclick="exitFullscreen()">✖ יציאה ממסך מלא</div>
 
-      <label for="phoneNumber">מספר טלפון:</label>
-      <input type="text" id="phoneNumber" placeholder="0501234567">
-
-      <label for="message">הודעה:</label>
-      <textarea id="message" rows="4" placeholder="הכנס הודעה כאן..."></textarea>
-
-      <button onclick="openWhatsApp()">שלח הודעה</button>
-    </div>
-  </div>
-
-  <!-- שכבת רקע -->
-  <div id="overlay" onclick="toggleWhatsAppPopup()"></div>
-
-  <!-- אייקון וואטסאפ צף -->
+  <!-- וואטסאפ -->
   <div id="whatsappIcon" onclick="toggleWhatsAppPopup()">
     <i class="fab fa-whatsapp"></i>
   </div>
 
-  <!-- מסך האפליקציות -->
-  <div class="app-wrapper">
+  <div id="overlay" onclick="toggleWhatsAppPopup()"></div>
+
+  <div id="whatsappPopup">
+    <h2><i class="fab fa-whatsapp"></i> שליחת הודעה</h2>
+
+    <label>קידומת:</label>
+    <input type="text" id="countryCode" placeholder="+972">
+
+    <label>מספר טלפון:</label>
+    <input type="tel" id="phoneNumber" placeholder="501234567" inputmode="numeric">
+
+    <label>הודעה:</label>
+    <textarea id="message" rows="3" placeholder="כתוב הודעה..."></textarea>
+
+    <button onclick="openWhatsApp()">
+      <span>שלח</span>
+      <i class="fab fa-whatsapp"></i>
+    </button>
+  </div>
+
+  <!-- תוכן עליון: כותרת + אייקונים -->
+  <div class="content">
     <header>
       <h1>הקיצורים שלי</h1>
-      <p>הקלק על סמל כדי לפתוח</p>
+      <p>בחר אייקון כדי לפתוח אפליקציה</p>
     </header>
 
-    <main class="icons-grid">
+    <div class="icons-grid">
 
       <a class="icon-card" href="https://chatgpt.com/" target="_blank">
         <div class="icon-circle icon-chatgpt">💬</div>
@@ -239,77 +387,86 @@
         <span class="icon-label">AliExpress</span>
       </a>
 
-      <a class="icon-card" href="https://docs.google.com/spreadsheets/u/0/d/18q5VSOFPVePQrP6xiM5krmKVQbgkXuL557WI2YCzGHo/htmlview?pli=1#gid=0" target="_blank">
+      <a class="icon-card" href="https://docs.google.com/spreadsheets/" target="_blank">
         <div class="icon-circle icon-invest">📈</div>
         <span class="icon-label">השקעות</span>
       </a>
 
-      <a class="icon-card" href="https://www.tustus.co.il/Arkia/Home" target="_blank">
+      <a class="icon-card" href="https://www.tustus.co.il" target="_blank">
         <div class="icon-circle icon-tustus">✈️</div>
         <span class="icon-label">טוסטוס</span>
       </a>
 
-      <a class="icon-card" href="https://time.aman.co.il/SynerionWeb/Account/Login?ReturnUrl=%2fSynerionWeb%2f#/dailyBrowser" target="_blank">
+      <a class="icon-card" href="https://time.aman.co.il" target="_blank">
         <div class="icon-circle icon-aman-time">🕒</div>
-        <span class="icon-label">נוכחות אמן</span>
+        <span class="icon-label">נוכחות</span>
       </a>
 
-      <a class="icon-card" href="https://mishnatyosef.org/sales-board" target="_blank">
+      <a class="icon-card" href="https://mishnatyosef.org" target="_blank">
         <div class="icon-circle icon-mishnat">📘</div>
         <span class="icon-label">משנת יוסף</span>
       </a>
 
-      <a class="icon-card" href="https://app.sketchup.com/app?hl=en#/" target="_blank">
+      <a class="icon-card" href="https://app.sketchup.com" target="_blank">
         <div class="icon-circle icon-sketchup">🏗️</div>
         <span class="icon-label">SketchUp</span>
       </a>
 
       <a class="icon-card" href="https://aman.hashavimnet.hilan.co.il/login" target="_blank">
         <div class="icon-circle icon-hilan">💼</div>
-        <span class="icon-label">תלושי שכר</span>
+        <span class="icon-label">תלושים</span>
       </a>
 
-    </main>
+    </div>
   </div>
 
-  <!-- ======================== SCRIPTS ========================== -->
+<script>
+/* ===== מסך מלא בטעינת הדף ===== */
+window.onload = () => {
+  enterFullscreen();
+};
 
-  <script>
-    /* מסך מלא */
-    function enterFullscreen() {
-      const elem = document.documentElement;
-      if (!document.fullscreenElement) {
-        elem.requestFullscreen().catch(() => {});
-      }
-    }
+/* כניסה למסך מלא */
+function enterFullscreen() {
+  const elem = document.documentElement;
+  if (!document.fullscreenElement && elem.requestFullscreen) {
+    elem.requestFullscreen().catch(() => {});
+  }
+}
 
-    function exitFullscreen(event) {
-      event.stopPropagation();
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-    }
+/* יציאה ממסך מלא */
+function exitFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+}
 
-    /* פופאפ וואטסאפ */
-    function toggleWhatsAppPopup() {
-      const popup = document.getElementById("whatsappPopup");
-      const overlay = document.getElementById("overlay");
+/* הצגת כפתור רק במסך מלא */
+document.addEventListener("fullscreenchange", () => {
+  const btn = document.querySelector(".fullscreen-exit");
+  btn.style.display = document.fullscreenElement ? "block" : "none";
+});
 
-      const isOpen = popup.style.display === "block";
+/* ===== וואטסאפ ===== */
+function toggleWhatsAppPopup() {
+  document.getElementById("whatsappPopup").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("open");
+}
 
-      popup.style.display = isOpen ? "none" : "block";
-      overlay.style.display = isOpen ? "none" : "block";
-    }
+function openWhatsApp() {
+  const code = document.getElementById("countryCode").value.replace("+", "") || "972";
+  const phone = document.getElementById("phoneNumber").value.replace(/\D/g, "");
+  const msg = encodeURIComponent(document.getElementById("message").value);
 
-    function openWhatsApp() {
-      const code = document.getElementById("countryCode").value.replace("+", "");
-      const phone = document.getElementById("phoneNumber").value;
-      const message = encodeURIComponent(document.getElementById("message").value);
+  if (!phone) {
+    alert("נא להזין מספר טלפון");
+    return;
+  }
 
-      const url = `https://wa.me/${code}${phone}?text=${message}`;
-      window.open(url, "_blank");
-    }
-  </script>
+  const url = `https://wa.me/${code}${phone}?text=${msg}`;
+  window.open(url, "_blank");
+}
+</script>
 
 </body>
 </html>
