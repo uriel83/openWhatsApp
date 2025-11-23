@@ -25,7 +25,7 @@
       position: relative;
     }
 
-    /* טיפה טקסטורה עדינה */
+    /* טקסטורה עדינה */
     body::before {
       content: "";
       position: fixed;
@@ -67,7 +67,7 @@
       z-index: 9990;
     }
 
-    /* ===== אזור התוכן העליון ===== */
+    /* ===== אזור התוכן ===== */
     .content {
       width: 100%;
       max-width: 480px;
@@ -98,7 +98,7 @@
       transform: translateY(-1px);
     }
 
-    /* ===== כותרת ואפליקציות (למעלה) ===== */
+    /* ===== כותרת ===== */
     header {
       text-align: center;
       margin-bottom: 18px;
@@ -117,6 +117,7 @@
       font-size: 0.9rem;
     }
 
+    /* ===== רשת אייקונים (למעלה) ===== */
     .icons-grid {
       margin-top: 10px;
       display: grid;
@@ -177,6 +178,9 @@
     .icon-mishnat { background: linear-gradient(135deg, #14b8a6, #0f766e); }
     .icon-sketchup { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
     .icon-hilan { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+
+    /* אייקון אוטובוס חדש */
+    .icon-bus { background: linear-gradient(135deg, #38bdf8, #2563eb); }
 
     /* ===== אייקון וואטסאפ צף ===== */
     #whatsappIcon {
@@ -319,6 +323,62 @@
       pointer-events: auto;
     }
 
+    /* ===== רשימת תחנות קבועות ===== */
+    .stops-section {
+      margin-top: 28px;
+      padding: 14px 14px 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(148,163,184,0.55);
+      box-shadow: 0 6px 16px rgba(15,23,42,0.08);
+    }
+
+    .stops-section h2 {
+      font-size: 0.98rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #0f172a;
+    }
+
+    .stops-section h2 i {
+      color: #2563eb;
+    }
+
+    .stops-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.9rem;
+    }
+
+    .stops-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(148,163,184,0.5);
+    }
+
+    .stops-list li:last-child {
+      border-bottom: none;
+    }
+
+    .stop-code {
+      font-weight: 700;
+      font-feature-settings: "tnum" 1;
+      color: #1d4ed8;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+
+    .stop-name {
+      flex: 1;
+      text-align: right;
+      color: #111827;
+    }
+
     @media (max-width: 480px) {
       .content {
         padding-inline: 12px;
@@ -368,7 +428,7 @@
     </button>
   </div>
 
-  <!-- תוכן עליון: כותרת + אייקונים -->
+  <!-- תוכן עליון: כותרת + אייקונים + תחנות -->
   <div class="content">
     <header>
       <h1>הקיצורים שלי</h1>
@@ -417,7 +477,39 @@
         <span class="icon-label">תלושים</span>
       </a>
 
+      <!-- אייקון חדש: מתי מגיע האוטובוס לתחנה -->
+      <a class="icon-card" href="https://xn----2hcef0a0dvc.xn--9dbq2a/%D7%9B%D7%9C%D7%99%D7%9D/%D7%9E%D7%99%D7%93%D7%A2-%D7%AA%D7%97%D7%A0%D7%95%D7%AA-%D7%90%D7%95%D7%98%D7%95%D7%91%D7%95%D7%A1" target="_blank">
+        <div class="icon-circle icon-bus">🚌</div>
+        <span class="icon-label">מתי מגיע האוטובוס</span>
+      </a>
+
     </div>
+
+    <!-- רשימת תחנות קבועות -->
+    <section class="stops-section">
+      <h2>
+        <i class="fa-solid fa-location-dot"></i>
+        התחנות הקבועות שלי
+      </h2>
+      <ul class="stops-list">
+        <li>
+          <span class="stop-code">26402</span>
+          <span class="stop-name">רבי עקיבא / שמואל הנביא</span>
+        </li>
+        <li>
+          <span class="stop-code">61416</span>
+          <span class="stop-name">רמב"ן / שדרות בית שמאי</span>
+        </li>
+        <li>
+          <span class="stop-code">61414</span>
+          <span class="stop-name">רמב"ן / רשב"א</span>
+        </li>
+        <li>
+          <span class="stop-code">27117</span>
+          <span class="stop-name">הרכבת / סלומון</span>
+        </li>
+      </ul>
+    </section>
   </div>
 
 <script>
