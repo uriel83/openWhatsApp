@@ -1,306 +1,178 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>עול תורה - סרטוני הערוץ</title>
+<title>YouTube Viewer Fix</title>
 
 <style>
-
-:root{
-    --bg:#0f1830;
-    --card:#1b2545;
-    --gold:#d4a04d;
-    --gold-light:#f0c97a;
-    --burgundy:#6b1f2d;
-    --burgundy-light:#8e2b3d;
-    --text:#ffffff;
-}
-
-*{
-    box-sizing:border-box;
-}
-
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:
-        radial-gradient(circle at top,#22365e 0%,#0f1830 60%);
-    color:var(--text);
+    font-family:Arial;
+    background:#0b1220;
+    color:white;
 }
 
 header{
+    padding:15px;
     text-align:center;
-    padding:30px 15px;
-}
-
-.logo{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    margin:auto;
-    display:block;
-    box-shadow:0 0 30px rgba(212,160,77,.4);
-}
-
-header h1{
-    margin:15px 0 5px;
-    color:var(--gold-light);
-}
-
-header p{
-    color:#d6d6d6;
 }
 
 #videos{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-    gap:20px;
-    padding:20px;
-    max-width:1400px;
-    margin:auto;
+    grid-template-columns:repeat(3, 1fr);
+    gap:15px;
+    padding:15px;
 }
 
 .card{
-    background:linear-gradient(
-        180deg,
-        rgba(107,31,45,.95),
-        rgba(27,37,69,.95)
-    );
-
-    border:1px solid rgba(212,160,77,.3);
-
-    border-radius:18px;
-    overflow:hidden;
-
+    background:#16233d;
+    padding:10px;
+    border-radius:10px;
     cursor:pointer;
-
-    transition:.35s;
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,.35);
 }
 
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:
-        0 15px 35px rgba(212,160,77,.25);
-}
-
-.thumb{
+.card img{
     width:100%;
-    display:block;
-}
-
-.content{
-    padding:14px;
+    border-radius:8px;
 }
 
 .title{
-    font-size:15px;
-    line-height:1.5;
-    font-weight:bold;
+    font-size:14px;
+    margin-top:8px;
 }
 
+/* MODAL */
 .modal{
     display:none;
     position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.9);
-    z-index:999;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
     justify-content:center;
     align-items:center;
-    padding:20px;
 }
 
 .modal-content{
-    width:100%;
-    max-width:1000px;
-
-    background:linear-gradient(
-        135deg,
-        #142140,
-        #28131a
-    );
-
-    border:1px solid rgba(212,160,77,.4);
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    box-shadow:
-        0 0 40px rgba(0,0,0,.6);
+    width:90%;
+    max-width:800px;
+    background:#111a2e;
+    padding:10px;
+    border-radius:10px;
+    position:relative;
 }
 
 #close{
     position:absolute;
-    top:20px;
-    left:25px;
-    font-size:38px;
-    color:white;
+    top:5px;
+    right:10px;
+    font-size:30px;
     cursor:pointer;
+    color:white;
 }
 
 #modalPlayer iframe{
     width:100%;
-    height:550px;
-    border:none;
+    height:450px;
 }
 
-.loading{
-    text-align:center;
-    padding:40px;
-    color:var(--gold-light);
+@media(max-width:900px){
+    #videos{grid-template-columns:repeat(2,1fr);}
 }
 
-@media(max-width:700px){
-
-    #modalPlayer iframe{
-        height:300px;
-    }
-
-    header h1{
-        font-size:24px;
-    }
+@media(max-width:600px){
+    #videos{grid-template-columns:1fr;}
 }
-
 </style>
 </head>
+
 <body>
 
 <header>
-
-    <!-- <img
-        class="logo"
-        src="https://i.imgur.com/qJt4f4m.png"
-        alt="לוגו"> -->
-
-    <h1>עול תורה</h1>
-<P>שעורים בסדר הדף היומי ע"י הרה"ג אברהם משה רוט שליט"א</P>
+<h2>הדף היומי</h2>
+<P>מפי הרה"ג אברהם משה רוט שליט"א</P>
 </header>
 
-<div id="videos">
-    <div class="loading">טוען סרטונים...</div>
-</div>
-
 <div id="modal" class="modal">
-
-    <span id="close">&times;</span>
-
     <div class="modal-content">
+        <span id="close">&times;</span>
         <div id="modalPlayer"></div>
     </div>
-
 </div>
+
+<div id="videos"></div>
 
 <script>
 
-const API_KEY = "YOUR_API_KEY";
+const API_KEY = "AIzaSyBZFL8gPr2fWNCwq_4PyL0gmCXypl0eX8g";
+const CHANNEL_ID = "UCzMKm2dTY7mNRbD6VZdndLg";
 
-const CHANNEL_ID =
-"UCzMKm2dTY7mNRbD6VZdndLg";
+let videos = [];
 
-function openModal(videoId){
-
+function openModal(id){
     document.getElementById("modalPlayer").innerHTML =
-    `
-    <iframe
-    src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-    allowfullscreen>
-    </iframe>
-    `;
-
-    document.getElementById("modal").style.display="flex";
+    `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allowfullscreen></iframe>`;
+    document.getElementById("modal").style.display = "flex";
 }
 
 function closeModal(){
-
-    document.getElementById("modal").style.display="none";
-
-    document.getElementById("modalPlayer").innerHTML="";
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("modalPlayer").innerHTML = "";
 }
 
-async function getUploadsPlaylist(){
-
-    const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`
-    );
-
+async function getUploads(){
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`);
     const data = await res.json();
-
-    return data.items?.[0]
-        ?.contentDetails
-        ?.relatedPlaylists
-        ?.uploads;
+    return data.items?.[0]?.contentDetails?.relatedPlaylists?.uploads || null;
 }
 
-async function loadVideos(){
-
-    const uploads =
-        await getUploadsPlaylist();
-
+async function load(){
+    const uploads = await getUploads();
     if(!uploads) return;
 
-    const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${uploads}&key=${API_KEY}`
-    );
-
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${uploads}&key=${API_KEY}`);
     const data = await res.json();
 
-    render(data.items || []);
+    videos = (data.items || []).map(i => i.snippet);
+    render(videos);
 }
 
-function render(items){
+function render(list){
+    const div = document.getElementById("videos");
+    div.innerHTML = "";
 
-    const container =
-        document.getElementById("videos");
+    list.forEach(v=>{
+        const id = v.resourceId.videoId;
 
-    container.innerHTML="";
+        const card = document.createElement("div");
+        card.className = "card";
 
-    items.forEach(item=>{
-
-        const s = item.snippet;
-
-        const videoId =
-        s.resourceId.videoId;
-
-        const card =
-        document.createElement("div");
-
-        card.className="card";
-
-        card.innerHTML=`
-        <img
-        class="thumb"
-        src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg">
-
-        <div class="content">
-            <div class="title">
-                ${s.title}
-            </div>
-        </div>
+        card.innerHTML = `
+            <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
+            <div class="title">${v.title}</div>
         `;
 
-        card.onclick=()=>openModal(videoId);
+        card.onclick = ()=>openModal(id);
 
-        container.appendChild(card);
+        div.appendChild(card);
     });
 }
 
-document.getElementById("close")
-.addEventListener("click",closeModal);
+document.addEventListener("DOMContentLoaded", ()=>{
 
-document.getElementById("modal")
-.addEventListener("click",e=>{
+    load();
 
-    if(e.target.id==="modal"){
-        closeModal();
-    }
+    document.getElementById("close").onclick = closeModal;
+
+    document.getElementById("modal").addEventListener("click", (e)=>{
+        if(e.target.id === "modal"){
+            closeModal();
+        }
+    });
+
 });
-
-loadVideos();
 
 </script>
 
