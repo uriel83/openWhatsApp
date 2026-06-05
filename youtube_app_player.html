@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Viewer Fix</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b1220;
+    color:white;
+}
+
+header{
+    padding:15px;
+    text-align:center;
+}
+
+#videos{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:15px;
+    padding:15px;
+}
+
+.card{
+    background:#16233d;
+    padding:10px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.card img{
+    width:100%;
+    border-radius:8px;
+}
+
+.title{
+    font-size:14px;
+    margin-top:8px;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    width:90%;
+    max-width:800px;
+    background:#111a2e;
+    padding:10px;
+    border-radius:10px;
+    position:relative;
+}
+
+#close{
+    position:absolute;
+    top:5px;
+    right:10px;
+    font-size:30px;
+    cursor:pointer;
+    color:white;
+}
+
+#modalPlayer iframe{
+    width:100%;
+    height:450px;
+}
+
+@media(max-width:900px){
+    #videos{grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:600px){
+    #videos{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>סרטוני ערוץ</h2>
+</header>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span id="close">&times;</span>
+        <div id="modalPlayer"></div>
+    </div>
+</div>
+
+<div id="videos"></div>
+
+<script>
+
+const API_KEY = "AIzaSyBZFL8gPr2fWNCwq_4PyL0gmCXypl0eX8g";
+const CHANNEL_ID = "UCm7deB9wIaXTtHymRqwTAAg";
+
+let videos = [];
+
+function openModal(id){
+    document.getElementById("modalPlayer").innerHTML =
+    `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allowfullscreen></iframe>`;
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("modalPlayer").innerHTML = "";
+}
+
+async function getUploads(){
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`);
+    const data = await res.json();
+    return data.items?.[0]?.contentDetails?.relatedPlaylists?.uploads || null;
+}
+
+async function load(){
+    const uploads = await getUploads();
+    if(!uploads) return;
+
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${uploads}&key=${API_KEY}`);
+    const data = await res.json();
+
+    videos = (data.items || []).map(i => i.snippet);
+    render(videos);
+}
+
+function render(list){
+    const div = document.getElementById("videos");
+    div.innerHTML = "";
+
+    list.forEach(v=>{
+        const id = v.resourceId.videoId;
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
+            <div class="title">${v.title}</div>
+        `;
+
+        card.onclick = ()=>openModal(id);
+
+        div.appendChild(card);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+
+    load();
+
+    document.getElementById("close").onclick = closeModal;
+
+    document.getElementById("modal").addEventListener("click", (e)=>{
+        if(e.target.id === "modal"){
+            closeModal();
+        }
+    });
+
+});
+
+</script>
+
+</body>
+</html>
